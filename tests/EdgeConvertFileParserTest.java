@@ -3,15 +3,22 @@ import org.junit.jupiter.api.Test;
 
 import java.io.File;
 
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+import static org.mockito.Matchers.any;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class EdgeConvertFileParserTest {
   private EdgeConvertFileParser parser;
+  private EdgeConvertFileParser mock;
 
   @BeforeEach
   void setUp() {
     File file = new File("./Courses.edg");
     parser = new EdgeConvertFileParser(file);
+
+    mock = mock(EdgeConvertFileParser.class);
   }
 
   //region parseEdgeFile
