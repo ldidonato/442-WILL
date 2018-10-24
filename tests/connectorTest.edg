@@ -1,0 +1,19 @@
+EDGE Diagram File
+
+Connector 9
+{
+  Style "Relation"
+  Figure1 1
+  Figure2 7
+  EndPoint1 448,544
+  EndPoint2 333,582
+  SuppressEnd1 FALSE
+  SuppressEnd2 FALSE
+  End1 "null"
+  End2 "null"
+  End1Length 18
+  End2Length 18
+  LineWidth 2
+  EndBorderWidth 2
+  Behavior 0x0000000000000000
+}

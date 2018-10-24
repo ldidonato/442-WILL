@@ -1,0 +1,17 @@
+EDGE Diagram File
+
+Figure 1
+{
+  Style "Pie"
+  Text "STUDENT"
+  Bounds 416,480,672,544
+  FillColor 255,255,255
+  BorderWidth 2
+  TextFormat 0x0022
+  Behavior 0x000003F001024E12
+  Symbol "ER entity"
+  TypeSize 8
+  TypeFace "Arial"
+  FillType 1
+  FillColorSolid 255,255,255
+}

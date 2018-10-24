@@ -1,0 +1,18 @@
+EDGE Diagram File
+
+Figure 3
+{
+  Style "Attribute"
+  Text "Grade"
+  Bounds 736,320,992,384
+  FillColor 255,255,255
+  BorderWidth 2
+  TextFormat 0x0022
+  Behavior 0x000003F001024E12
+  Symbol "ER attribute"
+  TypeSize 8
+  TypeFace "Arial"
+  TypeUnderl
+  FillType 1
+  FillColorSolid 255,255,255
+}

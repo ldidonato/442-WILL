@@ -2,6 +2,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.io.File;
+import java.io.IOException;
+import java.net.URI;
 
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -11,14 +13,11 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class EdgeConvertFileParserTest {
   private EdgeConvertFileParser parser;
-  private EdgeConvertFileParser mock;
+  private File mock;
+  private File file;
 
   @BeforeEach
   void setUp() {
-    File file = new File("./Courses.edg");
-    parser = new EdgeConvertFileParser(file);
-
-    mock = mock(EdgeConvertFileParser.class);
   }
 
   //region parseEdgeFile
@@ -27,6 +26,19 @@ class EdgeConvertFileParserTest {
    */
   @Test
   void parseEdgeFileFigureEntity() {
+    file = new File("/Users/lauren/Documents/GitHub/442-WILL/tests/figureTestAttr.edg");
+    parser = new EdgeConvertFileParser(file);
+
+    try
+    {
+      parser.parseEdgeFile();
+      assertNull(parser.getEdgeFields());
+      assertEquals(1, parser.getEdgeTables().length);
+    }
+    catch(IOException e)
+    {
+      fail("IOException");
+    }
   }
 
   /**
@@ -34,6 +46,17 @@ class EdgeConvertFileParserTest {
    */
   @Test
   void parseEdgeFileFigureAttribute() {
+    file = new File("./figureTestAttr.edg");
+    parser = new EdgeConvertFileParser(file);
+
+    try
+    {
+      parser.parseEdgeFile();
+    }
+    catch(IOException e)
+    {
+      fail("IOException");
+    }
   }
 
   /**
@@ -41,6 +64,17 @@ class EdgeConvertFileParserTest {
    */
   @Test
   void parseEdgeFileFigureAttributeUnderlined() {
+    file = new File("./figureTestAttrUnderl.edg");
+    parser = new EdgeConvertFileParser(file);
+
+    try
+    {
+      parser.parseEdgeFile();
+    }
+    catch(IOException e)
+    {
+      fail("IOException");
+    }
   }
 
   /**
@@ -48,6 +82,17 @@ class EdgeConvertFileParserTest {
    */
   @Test
   void parseEdgeFileFigureEntityExistingTable() {
+    file = new File("./figureTestEntityExistingName.edg");
+    parser = new EdgeConvertFileParser(file);
+
+    try
+    {
+      parser.parseEdgeFile();
+    }
+    catch(IOException e)
+    {
+      fail("IOException");
+    }
   }
 
   /**
@@ -55,13 +100,35 @@ class EdgeConvertFileParserTest {
    */
   @Test
   void parseEdgeFileFigureBlankName() {
+    file = new File("./figureTestBlankName.edg");
+    parser = new EdgeConvertFileParser(file);
+
+    try
+    {
+      parser.parseEdgeFile();
+    }
+    catch(IOException e)
+    {
+      fail("IOException");
+    }
   }
 
   /**
-   * Test parseEdgeFile given a figure with no line break in the text parameter
+   * Test parseEdgeFile given a figure with a line break in the text parameter
    */
   @Test
-  void parseEdgeFileFigureWithoutLineBreak() {
+  void parseEdgeFileFigureWithLineBreak() {
+    file = new File("./figureTestNameWithLineBreak.edg");
+    parser = new EdgeConvertFileParser(file);
+
+    try
+    {
+      parser.parseEdgeFile();
+    }
+    catch(IOException e)
+    {
+      fail("IOException");
+    }
   }
 
   /**
@@ -69,6 +136,17 @@ class EdgeConvertFileParserTest {
    */
   @Test
   void parseEdgeFileFigureNotEntityOrAttr() {
+    file = new File("./figureTestAttrNotEntityOrAttr.edg");
+    parser = new EdgeConvertFileParser(file);
+
+    try
+    {
+      parser.parseEdgeFile();
+    }
+    catch(IOException e)
+    {
+      fail("IOException");
+    }
   }
 
   /**
@@ -76,6 +154,17 @@ class EdgeConvertFileParserTest {
    */
   @Test
   void parseEdgeFileFigureNoStyle() {
+    file = new File("./figureTestNoStyle.edg");
+    parser = new EdgeConvertFileParser(file);
+
+    try
+    {
+      parser.parseEdgeFile();
+    }
+    catch(IOException e)
+    {
+      fail("IOException");
+    }
   }
 
   /**
@@ -83,6 +172,17 @@ class EdgeConvertFileParserTest {
    */
   @Test
   void parseEdgeFileFigureWithRelation() {
+    file = new File("./figureTestWithRelation.edg");
+    parser = new EdgeConvertFileParser(file);
+
+    try
+    {
+      parser.parseEdgeFile();
+    }
+    catch(IOException e)
+    {
+      fail("IOException");
+    }
   }
 
   /**
@@ -90,6 +190,17 @@ class EdgeConvertFileParserTest {
    */
   @Test
   void parseEdgeFileConnector() {
+    file = new File("./connectorTest.edg");
+    parser = new EdgeConvertFileParser(file);
+
+    try
+    {
+      parser.parseEdgeFile();
+    }
+    catch(IOException e)
+    {
+      fail("IOException");
+    }
   }
   //endregion
 
@@ -133,6 +244,8 @@ class EdgeConvertFileParserTest {
    */
   @Test
   void openFileEdgeDiagrammer() {
+    //when(mock).thenReturn();
+    //assertTrue();
   }
 
   /**
