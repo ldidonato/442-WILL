@@ -11,7 +11,8 @@ public class EdgeFieldTest {
 
     @Before
     public void setUp() throws Exception {
-        testObj = new EdgeField();
+        // "numFigure|name"
+        testObj = new EdgeField("1|Name");
         runner();
     }
 
@@ -36,112 +37,157 @@ public class EdgeFieldTest {
         testSetDataType();
     }
 
-    /*TODO*/
+    /*
+    * NumFigure is int
+    * */
     @Test
     public void testGetNumFigure(){
-
+        assertEquals("numFigure was initialized as 1",1,testObj.getNumFigure());
     }
 
-    /*TODO*/
+    /*
+    * Name is string
+    * */
     @Test
     public void testGetName(){
-
+        assertEquals("getName was initialized as \"Name\"","Name",testObj.getName());
     }
 
-    /*TODO*/
+    /*
+    * TableID is int
+    * */
     @Test
     public void testGetTableID(){
-
+        assertEquals("TableID should be 0",0,testObj.getTableID());
     }
 
-    /*TODO*/
+    /*
+    * TableID is int
+    * */
     @Test
     public void testSetTableID(){
+        testObj.setTableID(1);
+        assertEquals("TableID should be 1",1,testObj.getTableID());
 
     }
 
-    /*TODO*/
+    /*
+    * TableBound is int
+    * */
     @Test
-    public void testGetTableBound(){
-
+    public void testGetTableBound() {
+        assertEquals("TableBound should be 0", 0, testObj.getTableBound());
     }
 
-    /*TODO*/
+    /*
+    * TableBound is int
+    * */
     @Test
-    public void testSetTableBound(){
-
+    public void testSetTableBound() {
+        testObj.setTableBound(1);
+        assertEquals("TableBound should be 1", 1, testObj.getTableBound());
     }
 
-    /*TODO*/
+    /*
+    * FieldBound is int
+    * */
     @Test
     public void testGetFieldBound(){
-
+        assertEquals("FieldBound should be 0", 0, testObj.getFieldBound());
     }
 
-    /*TODO*/
+    /*
+    * FieldBound is int
+    * */
     @Test
     public void testSetFieldBound(){
-
+        testObj.setFieldBound(1);
+        assertEquals("FieldBound should be 1", 1, testObj.getFieldBound());
     }
 
-    /*TODO*/
+    /*
+    * DisallowNull is boolean
+    * */
     @Test
     public void testGetDisallowNull(){
-
+         assertEquals("DisallowNull should be false", false, testObj.getDisallowNull());
     }
 
-    /*TODO*/
+    /*
+    * DisallowNull is boolean
+    */
     @Test
     public void testSetDisallowNull(){
-
+        testObj.setDisallowNull(true);
+        assertEquals("DisallowNull should be true", true, testObj.getDisallowNull());
     }
 
-    /*TODO*/
+    /*
+    * IsPrimary is boolean
+    */
     @Test
     public void testGetIsPrimaryKey(){
-
+        assertEquals("IsPrimaryKey should be false", false, testObj.getIsPrimaryKey());
     }
 
-    /*TODO*/
+    /*
+    * IsPrimary is boolean
+    */
     @Test
     public void testSetIsPrimaryKey(){
-
+        testObj.setIsPrimaryKey(true);
+        assertEquals("IsPrimaryKey should be true", true, testObj.getIsPrimaryKey());
     }
 
-    /*TODO*/
+    /*
+    * Default Value is string
+    * */
     @Test
     public void testGetDefaultValue(){
-
+        assertEquals("DefaultValue should be \"\"", "", testObj.getDefaultValue());
     }
 
-    /*TODO*/
+    /*
+    * DefaultValue is string
+    * */
     @Test
     public void testSetDefaultValue(){
-
+        testObj.setDefaultValue("DefaultValue");
+        assertEquals("DefaultValue should be \"DefaultValue\"", "DefaultValue", testObj.getDefaultValue());
     }
 
-    /*TODO*/
+    /*
+    * VarcharValue is int
+    * */
     @Test
     public void testGetVarcharValue(){
-
+        assertEquals("VarcharValue should be 1", 1, testObj.getVarcharValue());
     }
 
-    /*TODO*/
+    /*
+    * VarcharValue is int
+    * */
     @Test
     public void testSetVarcharValue(){
-
+        testObj.setVarcharValue(2);
+        assertEquals("VarcharValue should be 2", 2, testObj.getVarcharValue());
     }
 
-    /*TODO*/
+    /*
+    * DataType is int
+    */
     @Test
     public void testGetDataType(){
-
+        assertEquals("DataType should be 0", 0, testObj.getDataType());
     }
 
-    /*TODO*/
+    /*
+    * DataType is int
+    */
     @Test
     public void testSetDataType(){
-
+        testObj.setDataType(1);
+        assertEquals("DataType should be 1", 1, testObj.getDataType());
     }
 
 
