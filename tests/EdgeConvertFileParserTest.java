@@ -5,15 +5,10 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URI;
 
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-import static org.mockito.Matchers.any;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 class EdgeConvertFileParserTest {
   private EdgeConvertFileParser parser;
-  private File mock;
   private File file;
 
   @BeforeEach
@@ -26,19 +21,11 @@ class EdgeConvertFileParserTest {
    */
   @Test
   void parseEdgeFileFigureEntity() {
-    file = new File("/Users/lauren/Documents/GitHub/442-WILL/tests/figureTestAttr.edg");
-    parser = new EdgeConvertFileParser(file);
+    file = new File("/Users/lauren/Documents/GitHub/442-WILL/tests/figureTestEntity.edg");
 
-    try
-    {
-      parser.parseEdgeFile();
-      assertNull(parser.getEdgeFields());
-      assertEquals(1, parser.getEdgeTables().length);
-    }
-    catch(IOException e)
-    {
-      fail("IOException");
-    }
+    parser = new EdgeConvertFileParser(file);
+    assertNull(parser.getEdgeFields());
+    assertEquals(1, parser.getEdgeTables().length);
   }
 
   /**
@@ -46,17 +33,11 @@ class EdgeConvertFileParserTest {
    */
   @Test
   void parseEdgeFileFigureAttribute() {
-    file = new File("./figureTestAttr.edg");
-    parser = new EdgeConvertFileParser(file);
+    file = new File("/Users/lauren/Documents/GitHub/442-WILL/tests/figureTestAttr.edg");
 
-    try
-    {
-      parser.parseEdgeFile();
-    }
-    catch(IOException e)
-    {
-      fail("IOException");
-    }
+    parser = new EdgeConvertFileParser(file);
+    assertNull(parser.getEdgeTables());
+    assertEquals(1, parser.getEdgeFields().length);
   }
 
   /**
@@ -64,17 +45,12 @@ class EdgeConvertFileParserTest {
    */
   @Test
   void parseEdgeFileFigureAttributeUnderlined() {
-    file = new File("./figureTestAttrUnderl.edg");
-    parser = new EdgeConvertFileParser(file);
+    file = new File("/Users/lauren/Documents/GitHub/442-WILL/tests/figureTestAttrUnderl.edg");
 
-    try
-    {
-      parser.parseEdgeFile();
-    }
-    catch(IOException e)
-    {
-      fail("IOException");
-    }
+    parser = new EdgeConvertFileParser(file);
+    assertNull(parser.getEdgeTables());
+    assertEquals(1, parser.getEdgeFields().length);
+    assertEquals(true, parser.getEdgeFields()[0].getIsPrimaryKey());
   }
 
   /**
@@ -82,17 +58,11 @@ class EdgeConvertFileParserTest {
    */
   @Test
   void parseEdgeFileFigureEntityExistingTable() {
-    file = new File("./figureTestEntityExistingName.edg");
-    parser = new EdgeConvertFileParser(file);
+    file = new File("/Users/lauren/Documents/GitHub/442-WILL/tests/figureTestEntityExistingName.edg");
 
-    try
-    {
-      parser.parseEdgeFile();
-    }
-    catch(IOException e)
-    {
-      fail("IOException");
-    }
+    parser = new EdgeConvertFileParser(file);
+    assertNull(parser.getEdgeTables());
+    assertNull(parser.getEdgeFields());
   }
 
   /**
@@ -100,17 +70,11 @@ class EdgeConvertFileParserTest {
    */
   @Test
   void parseEdgeFileFigureBlankName() {
-    file = new File("./figureTestBlankName.edg");
-    parser = new EdgeConvertFileParser(file);
+    file = new File("/Users/lauren/Documents/GitHub/442-WILL/tests/figureTestBlankName.edg");
 
-    try
-    {
-      parser.parseEdgeFile();
-    }
-    catch(IOException e)
-    {
-      fail("IOException");
-    }
+    parser = new EdgeConvertFileParser(file);
+    assertNull(parser.getEdgeTables());
+    assertNull(parser.getEdgeFields());
   }
 
   /**
@@ -118,17 +82,12 @@ class EdgeConvertFileParserTest {
    */
   @Test
   void parseEdgeFileFigureWithLineBreak() {
-    file = new File("./figureTestNameWithLineBreak.edg");
-    parser = new EdgeConvertFileParser(file);
+    file = new File("/Users/lauren/Documents/GitHub/442-WILL/tests/figureTestNameWithLineBreak.edg");
 
-    try
-    {
-      parser.parseEdgeFile();
-    }
-    catch(IOException e)
-    {
-      fail("IOException");
-    }
+    parser = new EdgeConvertFileParser(file);
+    assertNull(parser.getEdgeFields());
+    assertEquals(1, parser.getEdgeTables().length);
+    assertEquals("pies", parser.getEdgeTables()[0].getName());
   }
 
   /**
@@ -136,17 +95,11 @@ class EdgeConvertFileParserTest {
    */
   @Test
   void parseEdgeFileFigureNotEntityOrAttr() {
-    file = new File("./figureTestAttrNotEntityOrAttr.edg");
-    parser = new EdgeConvertFileParser(file);
+    file = new File("/Users/lauren/Documents/GitHub/442-WILL/tests/figureTestNotEntityOrAttr.edg");
 
-    try
-    {
-      parser.parseEdgeFile();
-    }
-    catch(IOException e)
-    {
-      fail("IOException");
-    }
+    parser = new EdgeConvertFileParser(file);
+    assertNull(parser.getEdgeTables());
+    assertNull(parser.getEdgeFields());
   }
 
   /**
@@ -154,17 +107,11 @@ class EdgeConvertFileParserTest {
    */
   @Test
   void parseEdgeFileFigureNoStyle() {
-    file = new File("./figureTestNoStyle.edg");
-    parser = new EdgeConvertFileParser(file);
+    file = new File("/Users/lauren/Documents/GitHub/442-WILL/tests/figureTestNoStyle.edg");
 
-    try
-    {
-      parser.parseEdgeFile();
-    }
-    catch(IOException e)
-    {
-      fail("IOException");
-    }
+    parser = new EdgeConvertFileParser(file);
+    assertNull(parser.getEdgeTables());
+    assertNull(parser.getEdgeFields());
   }
 
   /**
@@ -172,35 +119,24 @@ class EdgeConvertFileParserTest {
    */
   @Test
   void parseEdgeFileFigureWithRelation() {
-    file = new File("./figureTestWithRelation.edg");
-    parser = new EdgeConvertFileParser(file);
+    file = new File("/Users/lauren/Documents/GitHub/442-WILL/tests/figureTestWithRelation.edg");
 
-    try
-    {
-      parser.parseEdgeFile();
-    }
-    catch(IOException e)
-    {
-      fail("IOException");
-    }
+    parser = new EdgeConvertFileParser(file);
+    assertNull(parser.getEdgeTables());
+    assertNull(parser.getEdgeFields());
   }
 
   /**
    * Test parseEdgeFile given a Connector
    */
+  //TODO: finish this and make more of them for different types of connectors
   @Test
   void parseEdgeFileConnector() {
-    file = new File("./connectorTest.edg");
-    parser = new EdgeConvertFileParser(file);
+    file = new File("/Users/lauren/Documents/GitHub/442-WILL/tests/connectorTest.edg");
 
-    try
-    {
-      parser.parseEdgeFile();
-    }
-    catch(IOException e)
-    {
-      fail("IOException");
-    }
+    parser = new EdgeConvertFileParser(file);
+    assertNull(parser.getEdgeTables());
+    assertNull(parser.getEdgeFields());
   }
   //endregion
 
@@ -220,40 +156,7 @@ class EdgeConvertFileParserTest {
   }
   //endregion
 
-  //region getEdgeTables
-  /**
-   * Test getEdgeTables
-   */
-  @Test
-  void getEdgeTables() {
-  }
-  //endregion
-
-  //region getEdgeFields
-  /**
-   * Test getEdgeFields
-   */
-  @Test
-  void getEdgeFields() {
-  }
-  //endregion
-
   //region openFile
-  /**
-   * Test getEdgeTables with an EdgeDiagrammer file
-   */
-  @Test
-  void openFileEdgeDiagrammer() {
-    //when(mock).thenReturn();
-    //assertTrue();
-  }
-
-  /**
-   * Test getEdgeTables with a Save file
-   */
-  @Test
-  void openFileSave() {
-  }
 
   /**
    * Test getEdgeTables with a file other than a Save or EdgeDiagrammer file
