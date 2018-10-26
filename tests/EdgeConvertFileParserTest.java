@@ -11,10 +11,6 @@ class EdgeConvertFileParserTest {
   private EdgeConvertFileParser parser;
   private File file;
 
-  @BeforeEach
-  void setUp() {
-  }
-
   //region parseEdgeFile
   /**
    * Test parseEdgeFile given an entity
@@ -146,13 +142,10 @@ class EdgeConvertFileParserTest {
    */
   @Test
   void parseSaveFile() {
-  }
-
-  /**
-   * Tests parseSaveFile with an undefined next token
-   */
-  @Test
-  void parseSaveFileTokenNotDefined() {
+    file = new File("/Users/lauren/Documents/GitHub/442-WILL/tests/Test.edg.sav");
+    parser = new EdgeConvertFileParser(file);
+    assertEquals(7, parser.getEdgeFields().length);
+    assertEquals(3, parser.getEdgeTables().length);
   }
   //endregion
 
@@ -163,20 +156,10 @@ class EdgeConvertFileParserTest {
    */
   @Test
   void openFileOther() {
-  }
-
-  /**
-   * Test getEdgeTables with a FileNotFoundException
-   */
-  @Test
-  void openFileFileNotFound() {
-  }
-
-  /**
-   * Test getEdgeTables with an IOException
-   */
-  @Test
-  void openFileIO() {
+    file = new File("/Users/lauren/Documents/GitHub/442-WILL/tests/other.txt");
+    parser = new EdgeConvertFileParser(file);
+    assertNull(parser.getEdgeTables());
+    assertNull(parser.getEdgeFields());
   }
   //endregion
 }
