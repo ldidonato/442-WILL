@@ -36,6 +36,9 @@ public class EdgeFieldTest {
         testGetDataType();
         testSetDataType();
     }
+    public void resetObj(){
+        testObj = new EdgeField("1|Name");
+    }
 
     /*
     * NumFigure is int
@@ -43,6 +46,7 @@ public class EdgeFieldTest {
     @Test
     public void testGetNumFigure(){
         assertEquals("numFigure was initialized as 1",1,testObj.getNumFigure());
+        resetObj();
     }
 
     /*
@@ -51,6 +55,7 @@ public class EdgeFieldTest {
     @Test
     public void testGetName(){
         assertEquals("getName was initialized as \"Name\"","Name",testObj.getName());
+        resetObj();
     }
 
     /*
@@ -59,6 +64,7 @@ public class EdgeFieldTest {
     @Test
     public void testGetTableID(){
         assertEquals("TableID should be 0",0,testObj.getTableID());
+        resetObj();
     }
 
     /*
@@ -68,7 +74,7 @@ public class EdgeFieldTest {
     public void testSetTableID(){
         testObj.setTableID(1);
         assertEquals("TableID should be 1",1,testObj.getTableID());
-
+        resetObj();
     }
 
     /*
@@ -77,6 +83,7 @@ public class EdgeFieldTest {
     @Test
     public void testGetTableBound() {
         assertEquals("TableBound should be 0", 0, testObj.getTableBound());
+        resetObj();
     }
 
     /*
@@ -86,6 +93,7 @@ public class EdgeFieldTest {
     public void testSetTableBound() {
         testObj.setTableBound(1);
         assertEquals("TableBound should be 1", 1, testObj.getTableBound());
+        resetObj();
     }
 
     /*
@@ -94,6 +102,7 @@ public class EdgeFieldTest {
     @Test
     public void testGetFieldBound(){
         assertEquals("FieldBound should be 0", 0, testObj.getFieldBound());
+        resetObj();
     }
 
     /*
@@ -103,6 +112,7 @@ public class EdgeFieldTest {
     public void testSetFieldBound(){
         testObj.setFieldBound(1);
         assertEquals("FieldBound should be 1", 1, testObj.getFieldBound());
+        resetObj();
     }
 
     /*
@@ -110,7 +120,8 @@ public class EdgeFieldTest {
     * */
     @Test
     public void testGetDisallowNull(){
-         assertEquals("DisallowNull should be false", false, testObj.getDisallowNull());
+        assertEquals("DisallowNull should be false", false, testObj.getDisallowNull());
+        resetObj();
     }
 
     /*
@@ -120,6 +131,7 @@ public class EdgeFieldTest {
     public void testSetDisallowNull(){
         testObj.setDisallowNull(true);
         assertEquals("DisallowNull should be true", true, testObj.getDisallowNull());
+        resetObj();
     }
 
     /*
@@ -128,6 +140,7 @@ public class EdgeFieldTest {
     @Test
     public void testGetIsPrimaryKey(){
         assertEquals("IsPrimaryKey should be false", false, testObj.getIsPrimaryKey());
+        resetObj();
     }
 
     /*
@@ -137,6 +150,7 @@ public class EdgeFieldTest {
     public void testSetIsPrimaryKey(){
         testObj.setIsPrimaryKey(true);
         assertEquals("IsPrimaryKey should be true", true, testObj.getIsPrimaryKey());
+        resetObj();
     }
 
     /*
@@ -145,6 +159,7 @@ public class EdgeFieldTest {
     @Test
     public void testGetDefaultValue(){
         assertEquals("DefaultValue should be \"\"", "", testObj.getDefaultValue());
+        resetObj();
     }
 
     /*
@@ -154,6 +169,7 @@ public class EdgeFieldTest {
     public void testSetDefaultValue(){
         testObj.setDefaultValue("DefaultValue");
         assertEquals("DefaultValue should be \"DefaultValue\"", "DefaultValue", testObj.getDefaultValue());
+        resetObj();
     }
 
     /*
@@ -162,6 +178,7 @@ public class EdgeFieldTest {
     @Test
     public void testGetVarcharValue(){
         assertEquals("VarcharValue should be 1", 1, testObj.getVarcharValue());
+        resetObj();
     }
 
     /*
@@ -171,6 +188,7 @@ public class EdgeFieldTest {
     public void testSetVarcharValue(){
         testObj.setVarcharValue(2);
         assertEquals("VarcharValue should be 2", 2, testObj.getVarcharValue());
+        resetObj();
     }
 
     /*
@@ -179,6 +197,7 @@ public class EdgeFieldTest {
     @Test
     public void testGetDataType(){
         assertEquals("DataType should be 0", 0, testObj.getDataType());
+        resetObj();
     }
 
     /*
@@ -188,6 +207,7 @@ public class EdgeFieldTest {
     public void testSetDataType(){
         testObj.setDataType(1);
         assertEquals("DataType should be 1", 1, testObj.getDataType());
+        resetObj();
     }
 
 
