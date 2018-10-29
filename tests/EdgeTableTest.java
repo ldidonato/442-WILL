@@ -51,8 +51,9 @@ public class EdgeTableTest {
 
     @Test
     public void testAddRelatedTable() {
-        testObj.addRelatedTable(3);
         int[] testRelatedTables = {3};
+        testObj.addRelatedTable(3);
+        testObj.makeArrays();
 
         assertArrayEquals("Table num 3 was added, so there should be value 3 in the related tables array list", testRelatedTables, testObj.getRelatedTablesArray());
         reset();
@@ -62,20 +63,48 @@ public class EdgeTableTest {
     public void testGetRelatedTablesArray() {
         int [] testRelatedTables = {2};
         testObj.addRelatedTable(2);
+        testObj.makeArrays();
 
         assertArrayEquals("Table num 2 was added, so the related tables array should include 2.", testRelatedTables, testObj.getRelatedTablesArray());
         reset();
     }
 
     @Test
-    public void testGetSetRelatedFieldsArray() {
+    public void testGetSetRelatedFieldsArrayExeptionThrown() {
         // tests both set and get related fields
         int[] testRelatedFields = new int[2];
-        testRelatedFields[1] = 1;
+        boolean thrown = false;
 
-        testObj.setRelatedField(1, 1);
-        assertArrayEquals("Related field 1 should be set at index 1 of the related fields array.", testRelatedFields, testObj.getRelatedFieldsArray());
+        testRelatedFields[0] = 1;
+        testObj.makeArrays();
+
+        // error is expected to be thrown when there is no native fields ArrayList because array size=0
+        try {
+            testObj.setRelatedField(0, 1);
+        } catch (IndexOutOfBoundsException e){
+            thrown = true;
+        }
+
+        //assertArrayEquals("Related field 1 should be set at index 0 of the related fields array.", testRelatedFields, testObj.getRelatedFieldsArray());
+        assertTrue(thrown);
         reset();
+    }
+
+    @Test
+    public void testGetSetRelatedFieldsArray() {
+        int[] testRelatedFields = new int[3];
+
+        // test when related fields exist
+        testRelatedFields[1] = 1;
+        testObj.addNativeField(1);
+        testObj.addNativeField(2);
+        testObj.addNativeField(3);
+        testObj.makeArrays();
+
+        testObj.setRelatedField(1,1);
+
+        assertArrayEquals("Related field 1 should be set at index 1 of the related fields array.", testRelatedFields, testObj.getRelatedFieldsArray());
+
     }
 
     @Test
@@ -83,6 +112,7 @@ public class EdgeTableTest {
         // tests both add and get native fields array
         int[] testNativeFields = {1};
         testObj.addNativeField(1);
+        testObj.makeArrays();
 
         assertArrayEquals("Native field one should be added to the native fields array.", testNativeFields, testObj.getNativeFieldsArray());
         reset();
@@ -97,10 +127,11 @@ public class EdgeTableTest {
         testObj.addNativeField(1);
         testObj.addNativeField(2);
 
+        testObj.makeArrays();
+
         testObj.setRelatedField(0,2);
         testObj.setRelatedField(1,1);
         testObj.setRelatedField(2,0);
-        testObj.makeArrays();
 
         testObj.moveFieldUp(0);
 
@@ -113,17 +144,18 @@ public class EdgeTableTest {
 
     @Test
     public void testMoveFieldUp() {
-        int [] testNativeFields = {0,1,2};
-        int []  testRelatedFields = {2,1,0};
+        int [] testNativeFields = {0,2,1};
+        int []  testRelatedFields = {2,0,1};
 
         testObj.addNativeField(0);
         testObj.addNativeField(1);
         testObj.addNativeField(2);
 
+        testObj.makeArrays();
+
         testObj.setRelatedField(0,2);
         testObj.setRelatedField(1,1);
         testObj.setRelatedField(2,0);
-        testObj.makeArrays();
 
         testObj.moveFieldUp(2);
 
@@ -135,17 +167,18 @@ public class EdgeTableTest {
 
     @Test
     public void testMoveFieldDown() {
-        int [] testNativeFields = {0,2,1};
-        int []  testRelatedFields = {2,0,1};
+        int [] testNativeFields = {0,1,2};
+        int []  testRelatedFields = {2,1,0};
 
         testObj.addNativeField(0);
         testObj.addNativeField(2);
         testObj.addNativeField(1);
 
+        testObj.makeArrays();
+
         testObj.setRelatedField(0,2);
         testObj.setRelatedField(1,0);
         testObj.setRelatedField(2,1);
-        testObj.makeArrays();
 
         testObj.moveFieldDown(1);
 
@@ -164,10 +197,11 @@ public class EdgeTableTest {
         testObj.addNativeField(1);
         testObj.addNativeField(2);
 
+        testObj.makeArrays();
+
         testObj.setRelatedField(0,2);
         testObj.setRelatedField(1,1);
         testObj.setRelatedField(2,0);
-        testObj.makeArrays();
 
         testObj.moveFieldDown(2);
 
@@ -186,11 +220,11 @@ public class EdgeTableTest {
         testObj.addNativeField(1);
         testObj.addNativeField(2);
 
+        testObj.makeArrays();
+
         testObj.setRelatedField(0,2);
         testObj.setRelatedField(1,1);
         testObj.setRelatedField(2,0);
-
-        testObj.makeArrays();
 
         assertArrayEquals("Native fields arraylist should have been made into an array", testNativeFields, testObj.getNativeFieldsArray());
         assertArrayEquals("Related fields arraylist should have been made into an array", testRelatedFields, testObj.getRelatedFieldsArray());
@@ -211,6 +245,8 @@ public class EdgeTableTest {
         testObj.addNativeField(0);
         testObj.addNativeField(1);
         testObj.addNativeField(2);
+
+        testObj.makeArrays();
 
         testObj.setRelatedField(0,2);
         testObj.setRelatedField(1,1);
