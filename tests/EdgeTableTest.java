@@ -16,7 +16,6 @@ public class EdgeTableTest {
     @Before
     public void setUp() throws Exception {
         testObj = new EdgeTable("1|table1");
-        runTests();
     }
 
     private void runTests() {
