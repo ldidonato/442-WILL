@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test;
 import java.io.File;
 import java.io.IOException;
 import java.net.URI;
+import java.net.URL;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -17,7 +18,8 @@ class EdgeConvertFileParserTest {
    */
   @Test
   void parseEdgeFileFigureEntity() {
-    file = new File("/Users/lauren/Documents/GitHub/442-WILL/tests/figureTestEntity.edg");
+    URL url = getClass().getResource("testFiles/figureTestEntity.edg");
+    file = new File(url.getPath());
 
     parser = new EdgeConvertFileParser(file);
     assertEquals(0, parser.getEdgeFields().length);
@@ -29,7 +31,8 @@ class EdgeConvertFileParserTest {
    */
   @Test
   void parseEdgeFileFigureAttribute() {
-    file = new File("/Users/lauren/Documents/GitHub/442-WILL/tests/figureTestAttr.edg");
+    URL url = getClass().getResource("testFiles/figureTestAttr.edg");
+    file = new File(url.getPath());
 
     parser = new EdgeConvertFileParser(file);
     assertEquals(0, parser.getEdgeTables().length);
@@ -41,7 +44,8 @@ class EdgeConvertFileParserTest {
    */
   @Test
   void parseEdgeFileFigureAttributeUnderlined() {
-    file = new File("/Users/lauren/Documents/GitHub/442-WILL/tests/figureTestAttrUnderl.edg");
+    URL url = getClass().getResource("testFiles/figureTestAttrUnderl.edg");
+    file = new File(url.getPath());
 
     parser = new EdgeConvertFileParser(file);
     assertEquals(0, parser.getEdgeTables().length);
@@ -54,7 +58,8 @@ class EdgeConvertFileParserTest {
    */
   @Test
   void parseEdgeFileFigureEntityExistingTable() {
-    file = new File("/Users/lauren/Documents/GitHub/442-WILL/tests/figureTestEntityExistingName.edg");
+    URL url = getClass().getResource("testFiles/figureTestEntityExistingName.edg");
+    file = new File(url.getPath());
 
     parser = new EdgeConvertFileParser(file);
     assertEquals(1, parser.getEdgeTables().length);
@@ -66,7 +71,8 @@ class EdgeConvertFileParserTest {
    */
   @Test
   void parseEdgeFileFigureBlankName() {
-    file = new File("/Users/lauren/Documents/GitHub/442-WILL/tests/figureTestBlankName.edg");
+    URL url = getClass().getResource("testFiles/figureTestBlankName.edg");
+    file = new File(url.getPath());
 
     parser = new EdgeConvertFileParser(file);
     assertEquals(0, parser.getEdgeTables().length);
@@ -78,7 +84,8 @@ class EdgeConvertFileParserTest {
    */
   @Test
   void parseEdgeFileFigureWithLineBreak() {
-    file = new File("/Users/lauren/Documents/GitHub/442-WILL/tests/figureTestNameWithLineBreak.edg");
+    URL url = getClass().getResource("testFiles/figureTestNameWithLineBreak.edg");
+    file = new File(url.getPath());
 
     parser = new EdgeConvertFileParser(file);
     assertEquals(0, parser.getEdgeFields().length);
@@ -91,7 +98,8 @@ class EdgeConvertFileParserTest {
    */
   @Test
   void parseEdgeFileFigureNotEntityOrAttr() {
-    file = new File("/Users/lauren/Documents/GitHub/442-WILL/tests/figureTestNotEntityOrAttr.edg");
+    URL url = getClass().getResource("testFiles/figureTestNotEntityOrAttr.edg");
+    file = new File(url.getPath());
 
     parser = new EdgeConvertFileParser(file);
     assertEquals(0, parser.getEdgeTables().length);
@@ -103,7 +111,8 @@ class EdgeConvertFileParserTest {
    */
   @Test
   void parseEdgeFileFigureNoStyle() {
-    file = new File("/Users/lauren/Documents/GitHub/442-WILL/tests/figureTestNoStyle.edg");
+    URL url = getClass().getResource("testFiles/figureTestNoStyle.edg");
+    file = new File(url.getPath());
 
     parser = new EdgeConvertFileParser(file);
     assertEquals(0, parser.getEdgeTables().length);
@@ -115,7 +124,8 @@ class EdgeConvertFileParserTest {
    */
   @Test
   void parseEdgeFileFigureWithRelation() {
-    file = new File("/Users/lauren/Documents/GitHub/442-WILL/tests/figureTestWithRelation.edg");
+    URL url = getClass().getResource("testFiles/figureTestWithRelation.edg");
+    file = new File(url.getPath());
 
     parser = new EdgeConvertFileParser(file);
     assertEquals(0, parser.getEdgeTables().length);
@@ -127,7 +137,8 @@ class EdgeConvertFileParserTest {
    */
   @Test
   void parseEdgeFileConnector() {
-    file = new File("/Users/lauren/Documents/GitHub/442-WILL/tests/connectorTest.edg");
+    URL url = getClass().getResource("testFiles/connectorTest.edg");
+    file = new File(url.getPath());
 
     parser = new EdgeConvertFileParser(file);
     assertEquals(0, parser.getEdgeTables().length);
@@ -139,7 +150,8 @@ class EdgeConvertFileParserTest {
    */
   @Test
   void parseEdgeFileConnectorWithTables() {
-    file = new File("/Users/lauren/Documents/GitHub/442-WILL/tests/connectorTestTables.edg");
+    URL url = getClass().getResource("testFiles/connectorTestTables.edg");
+    file = new File(url.getPath());
 
     parser = new EdgeConvertFileParser(file);
     assertEquals(2, parser.getEdgeTables().length);
@@ -153,7 +165,9 @@ class EdgeConvertFileParserTest {
    */
   @Test
   void parseSaveFile() {
-    file = new File("/Users/lauren/Documents/GitHub/442-WILL/tests/Test.edg.sav");
+    URL url = getClass().getResource("testFiles/Test.edg.sav");
+    file = new File(url.getPath());
+
     parser = new EdgeConvertFileParser(file);
     assertEquals(7, parser.getEdgeFields().length);
     assertEquals(3, parser.getEdgeTables().length);
@@ -167,7 +181,9 @@ class EdgeConvertFileParserTest {
    */
   @Test
   void openFileOther() {
-    file = new File("/Users/lauren/Documents/GitHub/442-WILL/tests/other.txt");
+    URL url = getClass().getResource("testFiles/other.txt");
+    file = new File(url.getPath());
+
     parser = new EdgeConvertFileParser(file);
     assertNull(parser.getEdgeTables());
     assertNull(parser.getEdgeFields());
