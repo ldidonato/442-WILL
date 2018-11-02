@@ -10,9 +10,10 @@ public class EdgeFieldTest {
     EdgeField testObj;
 
     @Before
-    public void setUp(int numFigure, String name) throws Exception {
+    public void setUp(EdgeField testObj) throws Exception {
         // "numFigure|name"
-        testObj = new EdgeField(numFigure+"|"+name);
+        System.out.println("entered edge field");
+        this.testObj = testObj;
         runner();
     }
 

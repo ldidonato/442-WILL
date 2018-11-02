@@ -14,8 +14,10 @@ public class EdgeTableTest {
     private EdgeTable testObj;
 
     @Before
-    public void setUp() throws Exception {
-        testObj = new EdgeTable("1|table1");
+    public void setUp(EdgeTable testObj) throws Exception {
+        System.out.println("entered EdgeTableTest test");
+        this.testObj = testObj;
+        //runTests();
     }
 
     private void runTests() {
