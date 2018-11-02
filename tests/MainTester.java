@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 /**
  * Created by Lauren on 10/31/18.
  */
@@ -12,10 +14,22 @@ public class MainTester {
         }
     }
 
-    public static void main(String[] args) {
-        for(String item:args){
-            System.out.println(item);
+    public void cmdParser(String[] items){
+        for(String item:items){
+            switch(item){
+                case "-h":
+                    System.out.println("Help call");
+                case "-n":
+                    System.out.println("what follows is a test object");
+                case "-f":
+                    System.out.println("what follows is the name of a test object file, containing one or more test object");
+            }
         }
+    }
+
+    public static void main(String[] args) {
+        MainTester mainTester = new MainTester();
+        mainTester.cmdParser(args);
     }
 
 }
