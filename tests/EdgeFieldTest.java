@@ -7,13 +7,17 @@ import org.junit.Before;
 import org.junit.Test;
 
 public class EdgeFieldTest {
-    EdgeField testObj;
+    //EdgeField testObj;
+
+    private static EdgeField testObj;
+
+    public static void prepare(EdgeField testObj){
+        EdgeFieldTest.testObj = testObj;
+    }
 
     @Before
-    public void setUp(EdgeField testObj) throws Exception {
+    public void setUp() throws Exception {
         // "numFigure|name"
-        System.out.println("entered edge field");
-        this.testObj = testObj;
         runner();
     }
 

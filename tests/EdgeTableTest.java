@@ -11,14 +11,17 @@ import org.junit.Test;
 
 public class EdgeTableTest {
 
-    private EdgeTable testObj;
+    private static EdgeTable testObj;
+
+    public static void prepare(EdgeTable testObj){
+        EdgeTableTest.testObj = testObj;
+    }
 
     @Before
-    public void setUp(EdgeTable testObj) throws Exception {
-        System.out.println("entered EdgeTableTest test");
-        this.testObj = testObj;
+    public void setUp() throws Exception {
         //runTests();
     }
+
 
     private void runTests() {
         testGetNumFigure();

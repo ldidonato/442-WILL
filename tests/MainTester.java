@@ -1,10 +1,13 @@
+import org.junit.runner.JUnitCore;
+import org.junit.runner.Result;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 /**
- * Created by Lauren on 10/31/18.
+ * Created by Lauren and Will on 11/02/18.
  */
 public class MainTester {
 
@@ -12,17 +15,27 @@ public class MainTester {
         EdgeField edgeField = new EdgeField(numFigure+"|"+name);
         EdgeFieldTest edgeFieldTest = new EdgeFieldTest();
         try{
-            edgeFieldTest.setUp(edgeField);
+            JUnitCore junit = new JUnitCore();
+            EdgeFieldTest.prepare(edgeField);
+            Result result = junit.run(EdgeFieldTest.class);
+            System.out.printf("EdgeFieldTest ran: %s, Failed: %s%n",
+                    result.getRunCount(), result.getFailureCount());
+            //edgeFieldTest.setUp(edgeField);
         }catch(Exception e){
             e.printStackTrace();
         }
     }
-    
+
     public void runEdgeTableTest(int numFigure,String name){
         EdgeTable edgeTable = new EdgeTable(numFigure+"|"+name);
         EdgeTableTest edgeTableTest = new EdgeTableTest();
         try{
-            edgeTableTest.setUp(edgeTable);
+            JUnitCore junit = new JUnitCore();
+            EdgeTableTest.prepare(edgeTable);
+            Result result = junit.run(EdgeTableTest.class);
+            System.out.printf("EdgeTableTest ran: %s, Failed: %s%n",
+                    result.getRunCount(), result.getFailureCount());
+            //edgeTableTest.setUp(edgeTable);
         }catch(Exception e){
             e.printStackTrace();
         }
@@ -96,7 +109,12 @@ public class MainTester {
                     switch (items[i]) {
                         case "-h":
                             //help call
-                            System.out.println("Help call");
+                            System.out.println("Help \n-n : following this command is a test object, use 'f' at the" +
+                                    " beginning to identify as an EdgeField object or a 't; to identify as a EdgeTable object." +
+                                    " For example 'f,1,field' or 't,2,table'." +
+                                    "\n-f : following this command is the name of a test object file containing one or more test" +
+                                    " objects" +
+                                    "\n\n Note: -n and -f cannot be used in the same command");
                             break;
                         case "-n":
                             //what follows is a test object
