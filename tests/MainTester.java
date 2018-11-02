@@ -17,7 +17,7 @@ public class MainTester {
             e.printStackTrace();
         }
     }
-
+    
     public void runEdgeTableTest(int numFigure,String name){
         EdgeTable edgeTable = new EdgeTable(numFigure+"|"+name);
         EdgeTableTest edgeTableTest = new EdgeTableTest();
@@ -28,6 +28,9 @@ public class MainTester {
         }
     }
 
+    /*
+     * reads the data file
+     */
     public void readFile(String fileName){
         ArrayList<String[]> edgeFields = new ArrayList<>();
         ArrayList<String[]> edgeTables = new ArrayList<>();
@@ -62,30 +65,60 @@ public class MainTester {
 
     }
 
-    public void cmdParser(String[] items){
-        for(int i=0; i<items.length; i++){
+    /*
+     * checks to see if there are two types of objects
+     */
+    public boolean check(String[] items){
+        boolean f = false;
+        boolean n = false;
+        for (int i = 0; i < items.length; i++) {
+            if(items[i].equals("-f")){
+                f = true;
+            }else if(items[i].equals("-n")){
+                n = true;
+            }
+        }
+        return !(f && n);
+    }
 
-            switch(items[i]){
-                case "-h":
-                    System.out.println("Help call");
-                    break;
-                case "-n":
-                    //f = FieldTest obj, t = TableTest obj
-                    String object = items[i+1];
-                    String[] objectArray = object.split(",");
-                    if(objectArray[0].equals("f")){
-                        runEdgeFieldTest(Integer.parseInt(objectArray[1]),objectArray[2]);
-                    }else if(objectArray[0].equals("t")){
-                        runEdgeTableTest(Integer.parseInt(objectArray[1]),objectArray[2]);
-                    }else{
-                        System.out.println("The test object argument was supplied incorrectly, use -h for help. ");
+    /*
+     * Parses command line objects
+     */
+    public void cmdParser(String[] items){
+        if(items.length == 0){
+            //default if there is no command line arguments
+            runEdgeFieldTest(1, "field1");
+            runEdgeTableTest(2, "table1");
+        }else {
+            //check to see if -n and -f
+            if (check(items)) {
+                for (int i = 0; i < items.length; i++) {
+                    switch (items[i]) {
+                        case "-h":
+                            //help call
+                            System.out.println("Help call");
+                            break;
+                        case "-n":
+                            //what follows is a test object
+                            //f = FieldTest obj, t = TableTest obj
+                            String object = items[i + 1];
+                            String[] objectArray = object.split(",");
+                            if (objectArray[0].equals("f")) {
+                                runEdgeFieldTest(Integer.parseInt(objectArray[1]), objectArray[2]);
+                            } else if (objectArray[0].equals("t")) {
+                                runEdgeTableTest(Integer.parseInt(objectArray[1]), objectArray[2]);
+                            } else {
+                                System.out.println("The test object argument was supplied incorrectly, use -h for help. ");
+                            }
+                            break;
+                        case "-f":
+                            //what follows is the name of a test object file, containing one or more test object
+                            readFile(items[i + 1]);
+                            break;
                     }
-                    break;
-                case "-f":
-                    //System.out.println("what follows is the name of a test object file, containing one or more test object");
-                    readFile(items[i+1]);
-                    break;
-                
+                }
+            } else {
+                System.out.println("Cannot have an command line object and a test file object, use -h for help.");
             }
         }
     }
