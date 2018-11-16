@@ -54,7 +54,7 @@ public class EdgeConvertGUI {
    static DefaultListModel dlmDTTablesAll, dlmDTFieldsTablesAll;
    static JMenuBar jmbDTMenuBar;
    static JMenu jmDTFile, jmDTOptions, jmDTHelp;
-   static JMenuItem jmiDTOpenEdge, jmiDTOpenSave, jmiDTSave, jmiDTSaveAs, jmiDTExit, jmiDTOptionsOutputLocation, jmiDTOptionsShowProducts, jmiDTHelpAbout;
+   static JMenuItem jmiDTOpenEdge, jmiDTOpenSave, jmiDTSave, jmiDTSaveAs, jmiDTExit, jmiDTOptionsOutputLocation, jmiDTOptionsShowProducts, jmiDTHelpAbout, jmiDTHelpHelp;
    
    //Define Relations screen objects
    static JFrame jfDR;
@@ -66,8 +66,12 @@ public class EdgeConvertGUI {
    static JScrollPane jspDRTablesRelations, jspDRTablesRelatedTo, jspDRFieldsTablesRelations, jspDRFieldsTablesRelatedTo;
    static JMenuBar jmbDRMenuBar;
    static JMenu jmDRFile, jmDROptions, jmDRHelp;
-   static JMenuItem jmiDROpenEdge, jmiDROpenSave, jmiDRSave, jmiDRSaveAs, jmiDRExit, jmiDROptionsOutputLocation, jmiDROptionsShowProducts, jmiDRHelpAbout;
-   
+   static JMenuItem jmiDROpenEdge, jmiDROpenSave, jmiDRSave, jmiDRSaveAs, jmiDRExit, jmiDROptionsOutputLocation, jmiDROptionsShowProducts, jmiDRHelpAbout, jmiDRHelpHelp;
+
+   //Help System
+   static JFrame jfH;
+   static HashMap<String, String> helpText;
+
    public EdgeConvertGUI() {
       menuListener = new EdgeMenuListener();
       radioListener = new EdgeRadioButtonListener();
@@ -84,6 +88,7 @@ public class EdgeConvertGUI {
       }
       createDTScreen();
       createDRScreen();
+      createHelpScreen();
    } //showGUI()
 
    public void createDTScreen() {//create Define Tables screen
@@ -146,11 +151,15 @@ public class EdgeConvertGUI {
       jmiDTHelpAbout.setMnemonic(KeyEvent.VK_A);
       jmiDTHelpAbout.addActionListener(menuListener);
       jmDTHelp.add(jmiDTHelpAbout);
+      jmiDTHelpHelp = new JMenuItem("About");
+      jmiDTHelpHelp.setMnemonic(KeyEvent.VK_A);
+      jmiDTHelpHelp.addActionListener(menuListener);
+      jmDTHelp.add(jmiDTHelpHelp);
       
       jfcEdge = new JFileChooser();
       jfcOutputDir = new JFileChooser();
-	   effEdge = new ExampleFileFilter("edg", "Edge Diagrammer Files");
-   	effSave = new ExampleFileFilter("sav", "Edge Convert Save Files");
+	    effEdge = new ExampleFileFilter("edg", "Edge Diagrammer Files");
+   	  effSave = new ExampleFileFilter("sav", "Edge Convert Save Files");
       jfcOutputDir.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
 
       jpDTBottom = new JPanel(new GridLayout(1, 2));
@@ -530,6 +539,10 @@ public class EdgeConvertGUI {
       jmiDRHelpAbout.setMnemonic(KeyEvent.VK_A);
       jmiDRHelpAbout.addActionListener(menuListener);
       jmDRHelp.add(jmiDRHelpAbout);
+      jmiDRHelpHelp = new JMenuItem("Help");
+      jmiDRHelpHelp.setMnemonic(KeyEvent.VK_A);
+      jmiDRHelpHelp.addActionListener(menuListener);
+      jmDRHelp.add(jmiDRHelpHelp);
 
       jpDRCenter = new JPanel(new GridLayout(2, 2));
       jpDRCenter1 = new JPanel(new BorderLayout());
@@ -723,6 +736,26 @@ public class EdgeConvertGUI {
       jpDRBottom.add(jbDRCreateDDL);
       jfDR.getContentPane().add(jpDRBottom, BorderLayout.SOUTH);
    } //createDRScreen
+
+   public void createHelpScreen() {
+      helpText = new HashMap<>();
+      helpText.put("Open a File", "This application can open Edg files and Save files that were " +
+              "created by this application. An Edg file is any file that ends with \".edg\". " +
+              "A Save file is any file that ends in \".sav\". Save files are created when you " +
+              "save your work in this application. To open an Edg file in this program, select " +
+              "\"File\" > \"Open Edg File\". Then, select the file that you want to open from " +
+              "the file browser. Finally, click \"Open\". This will open the file in the program " +
+              "so that you can browse the file's contents.");
+      helpText.put("Save a File", "If you have changed information from an Edg file, you can save " +
+              "your work in a Save file so it is a smaller file that is easier to import later. " +
+              "If you are working from an imported Edg file, you can select \"File\" > \"Save As\". " +
+              "If you are working from an existing Save file, you can select \"File\" > \"Save\".");
+
+      for( String menuItem : helpText.keySet() )
+      {
+         //create the menu for the help screen
+      }
+   } //createHelpScreen
    
    public static void setReadSuccess(boolean value) {
       readSuccess = value;
@@ -1157,6 +1190,13 @@ public class EdgeConvertGUI {
    class EdgeMenuListener implements ActionListener {
       public void actionPerformed(ActionEvent ae) {
          int returnVal;
+
+         //help menu
+         if(ae.getSource() == jmiDRHelpHelp || ae.getSource() == jmiDTHelpHelp )
+         {
+
+         }
+
          if ((ae.getSource() == jmiDTOpenEdge) || (ae.getSource() == jmiDROpenEdge)) {
             if (!dataSaved) {
                int answer = JOptionPane.showConfirmDialog(null, "You currently have unsaved data. Continue?",
@@ -1232,13 +1272,12 @@ public class EdgeConvertGUI {
             dataSaved = true;
          }
          
-         if ((ae.getSource() == jmiDTSaveAs) || (ae.getSource() == jmiDRSaveAs) ||
-             (ae.getSource() == jmiDTSave) || (ae.getSource() == jmiDRSave)) {
-            if ((ae.getSource() == jmiDTSaveAs) || (ae.getSource() == jmiDRSaveAs)) {
-               saveAs();
-            } else {
-               writeSave();
-            }
+         if ((ae.getSource() == jmiDTSaveAs) || (ae.getSource() == jmiDRSaveAs) ) {
+            saveAs();
+         }
+
+         if ((ae.getSource() == jmiDTSave) || (ae.getSource() == jmiDRSave)) {
+            writeSave();
          }
          
          if ((ae.getSource() == jmiDTExit) || (ae.getSource() == jmiDRExit)) {
@@ -1272,7 +1311,7 @@ public class EdgeConvertGUI {
          if ((ae.getSource() == jmiDTHelpAbout) || (ae.getSource() == jmiDRHelpAbout)) {
             JOptionPane.showMessageDialog(null, "EdgeConvert ERD To DDL Conversion Tool\n" +
                                                 "by Stephen A. Capperell\n" +
-                                                "© 2007-2008");
+                                                " 2007-2008");
          }
       } // EdgeMenuListener.actionPerformed()
    } // EdgeMenuListener
