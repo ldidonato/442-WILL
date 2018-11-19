@@ -71,6 +71,7 @@ public class EdgeConvertGUI {
    //Help System
    static JFrame jfH;
    static HashMap<String, String> helpText;
+   static JTabbedPane helpTabs = new JTabbedPane();
 
    public EdgeConvertGUI() {
       menuListener = new EdgeMenuListener();
@@ -94,10 +95,12 @@ public class EdgeConvertGUI {
    public void createDTScreen() {//create Define Tables screen
       jfDT = new JFrame(DEFINE_TABLES);
       jfDT.setLocation(HORIZ_LOC, VERT_LOC);
-      Container cp = jfDT.getContentPane();
       jfDT.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
       jfDT.addWindowListener(edgeWindowListener);
-      jfDT.getContentPane().setLayout(new BorderLayout());
+
+      Container cp = jfDT.getContentPane();
+      cp.setLayout(new BorderLayout());
+
       jfDT.setVisible(true);
       jfDT.setSize(HORIZ_SIZE + 150, VERT_SIZE);
 
@@ -151,7 +154,7 @@ public class EdgeConvertGUI {
       jmiDTHelpAbout.setMnemonic(KeyEvent.VK_A);
       jmiDTHelpAbout.addActionListener(menuListener);
       jmDTHelp.add(jmiDTHelpAbout);
-      jmiDTHelpHelp = new JMenuItem("About");
+      jmiDTHelpHelp = new JMenuItem("Help");
       jmiDTHelpHelp.setMnemonic(KeyEvent.VK_A);
       jmiDTHelpHelp.addActionListener(menuListener);
       jmDTHelp.add(jmiDTHelpHelp);
@@ -738,6 +741,13 @@ public class EdgeConvertGUI {
    } //createDRScreen
 
    public void createHelpScreen() {
+      helpTabs = new JTabbedPane();
+      jfH = new JFrame(DEFINE_RELATIONS);
+      jfH.setSize(HORIZ_SIZE, VERT_SIZE);
+      jfH.setLocation(HORIZ_LOC, VERT_LOC);
+      jfH.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+      jfH.getContentPane().setLayout(new BorderLayout());
+
       helpText = new HashMap<>();
       helpText.put("Open a File", "This application can open Edg files and Save files that were " +
               "created by this application. An Edg file is any file that ends with \".edg\". " +
@@ -751,10 +761,26 @@ public class EdgeConvertGUI {
               "If you are working from an imported Edg file, you can select \"File\" > \"Save As\". " +
               "If you are working from an existing Save file, you can select \"File\" > \"Save\".");
 
+      //create the menu for the help screen
       for( String menuItem : helpText.keySet() )
       {
-         //create the menu for the help screen
+         //create a pane with the text in it
+         JPanel panel = new JPanel();
+         JTextArea textArea = new JTextArea(helpText.get(menuItem));
+         textArea.setLineWrap(true);
+         textArea.setWrapStyleWord(true);
+         textArea.setSize(HORIZ_SIZE - 100, VERT_SIZE - 100);
+         textArea.setEditable(false);
+         textArea.setBackground(jfH.getBackground());
+         panel.add(textArea);
+
+         //create a new tab with the pane and the article title
+         helpTabs.addTab(menuItem, null, panel);
       }
+      //add tabs to frame
+      jfH.add(helpTabs);
+      jfH.validate();
+
    } //createHelpScreen
    
    public static void setReadSuccess(boolean value) {
@@ -1194,7 +1220,7 @@ public class EdgeConvertGUI {
          //help menu
          if(ae.getSource() == jmiDRHelpHelp || ae.getSource() == jmiDTHelpHelp )
          {
-
+            jfH.setVisible(true);
          }
 
          if ((ae.getSource() == jmiDTOpenEdge) || (ae.getSource() == jmiDROpenEdge)) {
