@@ -18,7 +18,7 @@ public class EdgeConvertCreateDDLTest {
 
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         fields = new EdgeField[4];
         EdgeField field1 = new EdgeField("1|field1");
         EdgeField field2 = new EdgeField("2|field2");

@@ -1064,7 +1064,7 @@ public class EdgeConvertGUI {
       }
       if (alProductNames.size() > 0 && alSubclasses.size() > 0) { //do not recreate productName and objSubClasses arrays if the new path is empty of valid files
          productNames = (String[])alProductNames.toArray(new String[alProductNames.size()]);
-         objSubclasses = (Object[])alSubclasses.toArray(new Object[alSubclasses.size()]);
+         objSubclasses = alSubclasses.toArray(new Object[alSubclasses.size()]);
       }
    }
    

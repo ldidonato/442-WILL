@@ -16,7 +16,7 @@ public class EdgeFieldTest {
     }
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         // "numFigure|name"
         runner();
     }
