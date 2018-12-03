@@ -1028,27 +1028,32 @@ public class EdgeConvertGUI {
       Object[] args = {tables, fields};
       Object objOutput = null;
 
-      resultFiles = outputDir.listFiles();
-      alProductNames.clear();
-      alSubclasses.clear();
+
+      resultFiles = (outputDir != null ? outputDir.listFiles() : null);
       try {
-         for (int i = 0; i < resultFiles.length; i++) {
-         System.out.println(resultFiles[i].getName());
-            if (!resultFiles[i].getName().endsWith(".class")) {
-               continue; //ignore all files that are not .class files
-            }
-            resultClass = Class.forName(resultFiles[i].getName().substring(0, resultFiles[i].getName().lastIndexOf(".")));
-            if (resultClass.getSuperclass().getName().equals("EdgeConvertCreateDDL")) { //only interested in classes that extend EdgeConvertCreateDDL
-               if (parseFile == null && saveFile == null) {
-                  conResultClass = resultClass.getConstructor(paramTypesNull);
-                  } else {
-                  conResultClass = resultClass.getConstructor(paramTypes);
-                  objOutput = conResultClass.newInstance(args);
+         if(resultFiles != null && alProductNames != null && alSubclasses != null)
+         {
+            alProductNames.clear();
+            alSubclasses.clear();
+
+            for (int i = 0; i < resultFiles.length; i++) {
+               System.out.println(resultFiles[i].getName());
+               if (!resultFiles[i].getName().endsWith(".class")) {
+                  continue; //ignore all files that are not .class files
                }
-               alSubclasses.add(objOutput);
-               Method getProductName = resultClass.getMethod("getProductName", null);
-               String productName = (String)getProductName.invoke(objOutput, null);
-               alProductNames.add(productName);
+               resultClass = Class.forName(resultFiles[i].getName().substring(0, resultFiles[i].getName().lastIndexOf(".")));
+               if (resultClass.getSuperclass().getName().equals("EdgeConvertCreateDDL")) { //only interested in classes that extend EdgeConvertCreateDDL
+                  if (parseFile == null && saveFile == null) {
+                     conResultClass = resultClass.getConstructor(paramTypesNull);
+                  } else {
+                     conResultClass = resultClass.getConstructor(paramTypes);
+                     objOutput = conResultClass.newInstance(args);
+                  }
+                  alSubclasses.add(objOutput);
+                  Method getProductName = resultClass.getMethod("getProductName", null);
+                  String productName = (String)getProductName.invoke(objOutput, null);
+                  alProductNames.add(productName);
+               }
             }
          }
       } catch (InstantiationException ie) {
@@ -1062,9 +1067,15 @@ public class EdgeConvertGUI {
       } catch (InvocationTargetException ite) {
          ite.printStackTrace();
       }
-      if (alProductNames.size() > 0 && alSubclasses.size() > 0) { //do not recreate productName and objSubClasses arrays if the new path is empty of valid files
+      if (alProductNames != null && alSubclasses != null && alProductNames.size() > 0 && alSubclasses.size() > 0) {
+         //do not recreate productName and objSubClasses arrays if the new path is empty of valid files
          productNames = (String[])alProductNames.toArray(new String[alProductNames.size()]);
          objSubclasses = alSubclasses.toArray(new Object[alSubclasses.size()]);
+      }
+      else
+      {
+         productNames = new String[1];
+         productNames[0] = "MySQL";
       }
    }
    
@@ -1091,17 +1102,21 @@ public class EdgeConvertGUI {
       }
 
       try {
-         Class selectedSubclass = objSubclasses[selected].getClass();
+         Class selectedSubclass = (objSubclasses != null ? objSubclasses[selected].getClass() : CreateDDLMySQL.class);
+         Constructor<?> ctor = selectedSubclass.getConstructor(EdgeTable[].class, EdgeField[].class);
+         Object object = ctor.newInstance(new Object[] {tables, fields});
          Method getSQLString = selectedSubclass.getMethod("getSQLString", null);
          Method getDatabaseName = selectedSubclass.getMethod("getDatabaseName", null);
-         strSQLString = (String)getSQLString.invoke(objSubclasses[selected], null);
-         databaseName = (String)getDatabaseName.invoke(objSubclasses[selected], null);
+         strSQLString = (String)getSQLString.invoke(object, null);
+         databaseName = (String)getDatabaseName.invoke(object, null);
       } catch (IllegalAccessException iae) {
          iae.printStackTrace();
       } catch (NoSuchMethodException nsme) {
          nsme.printStackTrace();
       } catch (InvocationTargetException ite) {
          ite.printStackTrace();
+      } catch (InstantiationException e) {
+         e.printStackTrace();
       }
 
       return strSQLString;
@@ -1200,9 +1215,8 @@ public class EdgeConvertGUI {
    
    class CreateDDLButtonListener implements ActionListener {
       public void actionPerformed(ActionEvent ae) {
-         while (outputDir == null) {
-            JOptionPane.showMessageDialog(null, "You have not selected a path that contains valid output definition files yet.\nPlease select a path now.");
-            setOutputDir();
+         if (outputDir == null) {
+
          }
          getOutputClasses(); //in case outputDir was set before a file was loaded and EdgeTable/EdgeField objects created
          sqlString = getSQLStatements();

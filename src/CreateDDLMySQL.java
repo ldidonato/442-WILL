@@ -18,7 +18,7 @@ public class CreateDDLMySQL extends EdgeConvertCreateDDL {
    } //CreateDDLMySQL(EdgeTable[], EdgeField[])
    
    public CreateDDLMySQL() { //default constructor with empty arg list for to allow output dir to be set before there are table and field objects
-      
+      sb = new StringBuffer();
    }
    
    public void createDDL() {
@@ -60,7 +60,10 @@ public class CreateDDLMySQL extends EdgeConvertCreateDDL {
                   if (currentField.getFieldBound() != 0) {
                      numForeignKey++;
                   }
-                  sb.append(",\r\n"); //end of field
+                  if(nativeFieldCount + 1 < nativeFields.length)
+                     sb.append(",\r\n"); //end of field
+                  else
+                     sb.append("\r\n");
                }
                if (numPrimaryKey > 0) { //table has primary key(s)
                   sb.append("CONSTRAINT " + tables[tableCount].getName() + "_PK PRIMARY KEY (");
