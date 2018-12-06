@@ -142,7 +142,7 @@ public class EdgeConvertGUI {
       jmiDTOptionsOutputLocation.addActionListener(menuListener);
       jmiDTOptionsShowProducts = new JMenuItem("Show Database Products Available");
       jmiDTOptionsShowProducts.setMnemonic(KeyEvent.VK_H);
-      jmiDTOptionsShowProducts.setEnabled(false);
+      jmiDTOptionsShowProducts.setEnabled(true);
       jmiDTOptionsShowProducts.addActionListener(menuListener);
       jmDTOptions.add(jmiDTOptionsOutputLocation);
       jmDTOptions.add(jmiDTOptionsShowProducts);
@@ -530,7 +530,7 @@ public class EdgeConvertGUI {
       jmiDROptionsOutputLocation.addActionListener(menuListener);
       jmiDROptionsShowProducts = new JMenuItem("Show Database Products Available");
       jmiDROptionsShowProducts.setMnemonic(KeyEvent.VK_H);
-      jmiDROptionsShowProducts.setEnabled(false);
+      jmiDROptionsShowProducts.setEnabled(true);
       jmiDROptionsShowProducts.addActionListener(menuListener);
       jmDROptions.add(jmiDROptionsOutputLocation);
       jmDROptions.add(jmiDROptionsShowProducts);
@@ -1007,12 +1007,14 @@ public class EdgeConvertGUI {
       }
 
       JOptionPane.showMessageDialog(null, "The available products to create DDL statements are:\n" + displayProductNames());
-      jmiDTOptionsShowProducts.setEnabled(true);
-      jmiDROptionsShowProducts.setEnabled(true);
    }
    
    private String displayProductNames() {
       StringBuffer sb = new StringBuffer();
+
+      if(productNames == null)
+         return "MySQL";
+
       for (int i = 0; i < productNames.length; i++) {
          sb.append(productNames[i] + "\n");
       }
@@ -1067,15 +1069,27 @@ public class EdgeConvertGUI {
       } catch (InvocationTargetException ite) {
          ite.printStackTrace();
       }
-      if (alProductNames != null && alSubclasses != null && alProductNames.size() > 0 && alSubclasses.size() > 0) {
-         //do not recreate productName and objSubClasses arrays if the new path is empty of valid files
+
+      if(alProductNames == null)
+      {
+         productNames = new String[1];
+         productNames[0] = "MySQL";
+      }
+      else
+      {
+         alProductNames.add("MySQL");
          productNames = (String[])alProductNames.toArray(new String[alProductNames.size()]);
+      }
+
+      if (alSubclasses != null && alSubclasses.size() > 0) {
+         //do not recreate productName and objSubClasses arrays if the new path is empty of valid files
+         alSubclasses.add(new CreateDDLMySQL(tables, fields));
          objSubclasses = alSubclasses.toArray(new Object[alSubclasses.size()]);
       }
       else
       {
-         productNames = new String[1];
-         productNames[0] = "MySQL";
+         objSubclasses = new Object[1];
+         objSubclasses[0] = new CreateDDLMySQL(tables, fields);
       }
    }
    
@@ -1102,21 +1116,18 @@ public class EdgeConvertGUI {
       }
 
       try {
-         Class selectedSubclass = (objSubclasses != null ? objSubclasses[selected].getClass() : CreateDDLMySQL.class);
+         Class selectedSubclass = objSubclasses[selected].getClass();
          Constructor<?> ctor = selectedSubclass.getConstructor(EdgeTable[].class, EdgeField[].class);
-         Object object = ctor.newInstance(new Object[] {tables, fields});
          Method getSQLString = selectedSubclass.getMethod("getSQLString", null);
          Method getDatabaseName = selectedSubclass.getMethod("getDatabaseName", null);
-         strSQLString = (String)getSQLString.invoke(object, null);
-         databaseName = (String)getDatabaseName.invoke(object, null);
+         strSQLString = (String)getSQLString.invoke(objSubclasses[selected], null);
+         databaseName = (String)getDatabaseName.invoke(objSubclasses[selected], null);
       } catch (IllegalAccessException iae) {
          iae.printStackTrace();
       } catch (NoSuchMethodException nsme) {
          nsme.printStackTrace();
       } catch (InvocationTargetException ite) {
          ite.printStackTrace();
-      } catch (InstantiationException e) {
-         e.printStackTrace();
       }
 
       return strSQLString;
@@ -1215,9 +1226,6 @@ public class EdgeConvertGUI {
    
    class CreateDDLButtonListener implements ActionListener {
       public void actionPerformed(ActionEvent ae) {
-         if (outputDir == null) {
-
-         }
          getOutputClasses(); //in case outputDir was set before a file was loaded and EdgeTable/EdgeField objects created
          sqlString = getSQLStatements();
          if (sqlString.equals(EdgeConvertGUI.CANCELLED)) {
